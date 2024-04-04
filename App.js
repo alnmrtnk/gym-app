@@ -10,6 +10,7 @@ import FoodScreen from './src/screens/FoodScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import { useState } from 'react';
 import AuthContext from './src/contexts/AuthContext';
+import PersonalTrainingsScreen from './src/screens/PersonalTrainingsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +56,10 @@ export default function App() {
                 <Stack.Screen
                   name="Gym"
                   component={GymScreen}
+                />
+                <Stack.Screen
+                  name="PersonalTrainings"
+                  component={PersonalTrainingsScreen}
                 />
                 <Stack.Screen
                   name="Home"
