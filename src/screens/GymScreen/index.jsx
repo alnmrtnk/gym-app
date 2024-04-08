@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, Pressable } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import HeaderBottomMenuComponent from '../../components/HeaderBottomMenuComponent';
 import PersonalGroupTrainingsSwitch from '../../components/PersonalGroupTrainingsSwitch';
 import Colors from '../../../assets/Colors';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePicking from '../../components/DateTimePicking';
 import GymInfoData from '../../components/GymInfoData';
 
@@ -12,9 +11,9 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-around",
     backgroundColor: Colors.PRIMARY_BACKGROUND_COLOR,
     padding: "5%",
+    minHeight: 667,
   },
   findButton: {
     alignSelf: "center",

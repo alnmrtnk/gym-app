@@ -9,13 +9,14 @@ import HeaderBottomMenuComponent from '../../components/HeaderBottomMenuComponen
 
 const styles = StyleSheet.create({
   contentContainer: {
+    width: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: Colors.PRIMARY_BACKGROUND_COLOR,
     padding: "5%",
-    gap: 20,
+    minHeight: 667,
   },
   bottomContentContainer: {
     width: "100%",

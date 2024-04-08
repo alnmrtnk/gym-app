@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 const PersonalTrainingsScreen = ({ navigation }) => {
   return (
     <View>
-      <HeaderBottomMenuComponent currentPage={2} navigation={navigation}>
+      <HeaderBottomMenuComponent currentPage={1} navigation={navigation}>
         <View style={styles.contentContainer}>
           <PersonalGroupTrainingsSwitch index={0} navigation={navigation} />
           <ScrollView style={styles.trainersContainer}>

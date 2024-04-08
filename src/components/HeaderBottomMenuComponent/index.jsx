@@ -6,37 +6,37 @@ import Colors from '../../../assets/Colors';
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    display: "flex",
+    flex: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
+  },
+  header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
   },
   contentContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    alignItems: "center",
+    flex: 1,
+    marginTop: 0,
+    marginBottom: 668,
     backgroundColor: Colors.PRIMARY_BACKGROUND_COLOR,
-    padding: "5%",
-    gap: 20,
   },
   bottomContentContainer: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 20,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   }
 });
-
 const HeaderBottomMenuComponent = ({ navigation, currentPage, children }) => {
   return (
     <View style={styles.container}>
-      <ScreenHeader />
-      {children}
-      <ScreenMenu navigation={navigation} currentPage={currentPage} />
+      <ScreenHeader style={styles.header} />
+      <View style={styles.contentContainer}>
+        {children}
+      </View>
+      <ScreenMenu style={styles.bottomContentContainer} navigation={navigation} currentPage={currentPage} />
     </View>
   );
 };
-
 export default HeaderBottomMenuComponent;
