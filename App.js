@@ -54,12 +54,12 @@ export default function App() {
             ) : (
               <Stack.Group>
                 <Stack.Screen
-                  name="Gym"
-                  component={GymScreen}
-                />
-                <Stack.Screen
                   name="PersonalTrainings"
                   component={PersonalTrainingsScreen}
+                />
+                <Stack.Screen
+                  name="Gym"
+                  component={GymScreen}
                 />
                 <Stack.Screen
                   name="Home"

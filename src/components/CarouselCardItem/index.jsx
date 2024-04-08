@@ -36,21 +36,23 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
         width: ITEM_WIDTH,
-        height: 100,
+        height: 135,
     },
     header: {
         color: "#222",
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: "bold",
         paddingLeft: 20,
-        paddingTop: 20
+        paddingTop: 5,
+        fontFamily: "nunito-bold",
     },
     body: {
         color: "#222",
-        fontSize: 18,
+        fontSize: 16,
         paddingLeft: 20,
-        paddingLeft: 20,
-        paddingRight: 20
+        paddingRight: 20,
+        fontFamily: "nunito-bold",
+        color: "#4d4d4d"
     }
 });
 
