@@ -11,6 +11,7 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import { useState } from 'react';
 import AuthContext from './src/contexts/AuthContext';
 import PersonalTrainingsScreen from './src/screens/PersonalTrainingsScreen';
+import GroupTrainingsScreen from './src/screens/GroupTrainingsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -53,6 +54,10 @@ export default function App() {
               </Stack.Group>
             ) : (
               <Stack.Group>
+                <Stack.Screen
+                  name="GroupTrainings"
+                  component={GroupTrainingsScreen}
+                />
                 <Stack.Screen
                   name="PersonalTrainings"
                   component={PersonalTrainingsScreen}

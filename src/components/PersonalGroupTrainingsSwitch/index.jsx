@@ -22,14 +22,15 @@ const styles = StyleSheet.create({
     switcherHeader: {
         fontSize: 16,
         fontFamily: "nunito-bold",
+        width: 75,
+        textAlign: "center",
     }
 });
 
 const PersonalGroupTrainingsSwitch = ({ index, navigation }) => {
     const [isEnabled, setIsEnabled] = useState(index === 1);
     const toggleSwitch = () => {
-        //navigation.navigate();
-        setIsEnabled(previousState => !previousState);
+        navigation.navigate(index === 0 ? "GroupTrainings" : "Gym");
     }
 
     return (
