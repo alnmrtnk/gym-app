@@ -3,6 +3,7 @@ import HeaderBottomMenuComponent from '../../components/HeaderBottomMenuComponen
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Colors from '../../../assets/Colors';
 import PersonalGroupTrainingsSwitch from '../../components/PersonalGroupTrainingsSwitch';
+import AgendaCalendar from '../../components/AgendaCalendar';
 
 const styles = StyleSheet.create({
     contentContainer: {
@@ -26,8 +27,7 @@ const GroupTrainingsScreen = ({ navigation }) => {
             <HeaderBottomMenuComponent currentPage={1} navigation={navigation}>
                 <View style={styles.contentContainer}>
                     <PersonalGroupTrainingsSwitch index={1} navigation={navigation} />
-                    <ScrollView style={styles.trainersContainer}>
-                    </ScrollView>
+                    <AgendaCalendar/>
                 </View>
             </HeaderBottomMenuComponent>
         </View>
