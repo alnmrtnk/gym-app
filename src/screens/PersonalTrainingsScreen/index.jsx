@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import HeaderBottomMenuComponent from '../../components/HeaderBottomMenuComponent';
 import Colors from '../../../assets/Colors';
 import PersonalGroupTrainingsSwitch from '../../components/PersonalGroupTrainingsSwitch';
@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
 })
 
 const PersonalTrainingsScreen = ({ navigation }) => {
+  const openTrainerScreen = (index) => {
+    console.log(index)
+    navigation.navigate('Trainer', {index: index});
+  }
+
   return (
     <View>
       <HeaderBottomMenuComponent currentPage={1} navigation={navigation}>
@@ -32,7 +37,9 @@ const PersonalTrainingsScreen = ({ navigation }) => {
             {
               data.map((trainer, index) => {
                 return (
-                  <TrainerContainer key={index} trainer={trainer} />
+                  <Pressable onPress={() => openTrainerScreen(index)}>
+                    <TrainerContainer key={index} trainer={trainer}/>
+                  </Pressable>
                 )
               })
             }

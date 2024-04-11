@@ -12,6 +12,7 @@ import { useState } from 'react';
 import AuthContext from './src/contexts/AuthContext';
 import PersonalTrainingsScreen from './src/screens/PersonalTrainingsScreen';
 import GroupTrainingsScreen from './src/screens/GroupTrainingsScreen';
+import TrainerScreen from './src/screens/TrainerScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,20 +56,25 @@ export default function App() {
             ) : (
               <Stack.Group>
                 <Stack.Screen
-                  name="GroupTrainings"
-                  component={GroupTrainingsScreen}
+                 name="Trainer"
+                 component={TrainerScreen}
+                 initialParams={{ index: 0 }}
                 />
                 <Stack.Screen
-                  name="PersonalTrainings"
-                  component={PersonalTrainingsScreen}
+                  name="Home"
+                  component={HomeScreen}
                 />
                 <Stack.Screen
                   name="Gym"
                   component={GymScreen}
                 />
                 <Stack.Screen
-                  name="Home"
-                  component={HomeScreen}
+                  name="PersonalTrainings"
+                  component={PersonalTrainingsScreen}
+                />
+                <Stack.Screen
+                  name="GroupTrainings"
+                  component={GroupTrainingsScreen}
                 />
                 <Stack.Screen
                   name="Food"
