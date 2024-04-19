@@ -1,12 +1,26 @@
 import React from 'react';
 import HeaderBottomMenuComponent from '../../components/HeaderBottomMenuComponent';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import Colors from '../../../assets/Colors';
+
+const styles = StyleSheet.create({
+    contentContainer: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: Colors.PRIMARY_BACKGROUND_COLOR,
+        padding: "5%",
+        minHeight: 667,
+    },
+});
 
 const FoodScreen = ({ navigation }) => {
     return (
         <View>
             <HeaderBottomMenuComponent currentPage={2} navigation={navigation}>
-                <Text>Food Screen</Text>
+                <View style={styles.contentContainer}>
+                    <Text>Food Screen</Text>
+                </View>
             </HeaderBottomMenuComponent>
         </View>
     );

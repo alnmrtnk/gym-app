@@ -56,9 +56,8 @@ export default function App() {
             ) : (
               <Stack.Group>
                 <Stack.Screen
-                 name="Trainer"
-                 component={TrainerScreen}
-                 initialParams={{ index: 0 }}
+                  name="Food"
+                  component={FoodScreen}
                 />
                 <Stack.Screen
                   name="Home"
@@ -73,13 +72,15 @@ export default function App() {
                   component={PersonalTrainingsScreen}
                 />
                 <Stack.Screen
+                 name="Trainer"
+                 component={TrainerScreen}
+                 initialParams={{ index: 0 }}
+                />
+                <Stack.Screen
                   name="GroupTrainings"
                   component={GroupTrainingsScreen}
                 />
-                <Stack.Screen
-                  name="Food"
-                  component={FoodScreen}
-                />
+                
                 <Stack.Screen
                   name="Settings"
                   component={SettingsScreen}

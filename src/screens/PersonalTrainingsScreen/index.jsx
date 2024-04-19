@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
 
 const PersonalTrainingsScreen = ({ navigation }) => {
   const openTrainerScreen = (index) => {
-    console.log(index)
-    navigation.navigate('Trainer', {index: index});
+    navigation.navigate('Trainer', { index: index });
   }
 
   return (
@@ -37,8 +36,8 @@ const PersonalTrainingsScreen = ({ navigation }) => {
             {
               data.map((trainer, index) => {
                 return (
-                  <Pressable onPress={() => openTrainerScreen(index)}>
-                    <TrainerContainer key={index} trainer={trainer}/>
+                  <Pressable key={index} onPress={() => openTrainerScreen(index)}>
+                    <TrainerContainer trainer={trainer} />
                   </Pressable>
                 )
               })
