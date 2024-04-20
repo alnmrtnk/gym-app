@@ -81,7 +81,7 @@ const SignUpScreen = ({ navigation }) => {
     const [userData, setUserData] = useState({ name: "", email: "", phone: "", password: "" });
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const { setIsLoggedIn } = useContext(AuthContext);
+    const { setIsLoggedIn, setUserId } = useContext(AuthContext);
 
     const toast = useToast();
 
@@ -96,7 +96,7 @@ const SignUpScreen = ({ navigation }) => {
                     phone: userData.phone
                 });
 
-                console.log(serverResponse.data);
+                setUserId(serverResponse.data.userId);
     
                 setIsLoggedIn(true);
             }

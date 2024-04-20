@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 
 const LoginScreen = ({ navigation }) => {
   const [userData, setUserData] = useState({email: "", password: "" });
-  const {setIsLoggedIn} =  useContext(AuthContext);
+  const {setIsLoggedIn, setUserId} =  useContext(AuthContext);
   const toast = useToast();
 
   const signUpPressed = () => {
@@ -101,10 +101,14 @@ const LoginScreen = ({ navigation }) => {
 
   const login = async() => {
     try {
-      await axios.post(`${devConfig.API_URL}/login`, {
+      const serverResponse = await axios.post(`${devConfig.API_URL}/login`, {
         email: userData.email,
         password: userData.password,
       });
+
+      console.log(serverResponse.data.userId);
+
+      setUserId(serverResponse.data.userId);
 
       setIsLoggedIn(true);
     }

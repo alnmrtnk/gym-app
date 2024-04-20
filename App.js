@@ -36,11 +36,12 @@ export default function App() {
   });
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   if (fontsLoaded) {
     return (
       <ToastProvider>
-        <AuthContext.Provider value={{ setIsLoggedIn }}>
+        <AuthContext.Provider value={{ setIsLoggedIn, setUserId, userId }}>
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ animation: 'none' }} >
               {!isLoggedIn ? (
