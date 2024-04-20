@@ -1,13 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { Pressable, StyleSheet, View, Text, Alert} from 'react-native';
+import { Pressable, StyleSheet, View, Text} from 'react-native';
 import Colors from '../../../assets/Colors';
 import FormsInput from '../../components/FormsInput';
 import UserSVG from "../../../assets/user.svg";
 import PasswordSVG from "../../../assets/password.svg";
 import EmailSVG from "../../../assets/email.svg";
 import PhoneSVG from "../../../assets/phone.svg";
-import { readUserData, userCanSignUp } from '../../services/userService';
+import { userCanSignUp } from '../../services/userService';
 import AuthContext from '../../contexts/AuthContext';
+import { useToast } from 'react-native-toast-notifications';
+import devConfig from "../../../config.development";
+import axios from "axios";
 
 
 const styles = StyleSheet.create({
@@ -80,16 +83,34 @@ const SignUpScreen = ({ navigation }) => {
 
     const { setIsLoggedIn } = useContext(AuthContext);
 
+    const toast = useToast();
+
     const createAccountPressed = async () => {
         const response = await userCanSignUp(userData, confirmPassword);
         if (response.success) {
-            setIsLoggedIn(true);
-        } else {
-            Alert(response.message);
-        }
+            try{
+                const serverResponse = await axios.post(`${devConfig.API_URL}/signup`, {
+                    name: userData.name,
+                    email: userData.email,
+                    password: userData.password,
+                    phone: userData.phone
+                });
 
-        const users = await readUserData();
-        console.log(users);
+                console.log(serverResponse.data);
+    
+                setIsLoggedIn(true);
+            }
+            catch(error){
+                console.log(error);
+                toast.show("User already exists", { type: "warning", placement: "top"});
+            }
+        }
+        else {
+            toast.show(response.message, {
+                type: "error",
+                placement: "top",
+            });
+        }
     }
 
     const loginPressed = () => {

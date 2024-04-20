@@ -101,12 +101,12 @@ const LoginScreen = ({ navigation }) => {
 
   const login = async() => {
     try {
-      const response = await axios.post(`${devConfig.API_URL}/login`, {
+      await axios.post(`${devConfig.API_URL}/login`, {
         email: userData.email,
         password: userData.password,
       });
 
-      console.log(response.data);
+      setIsLoggedIn(true);
     }
     catch (error) {
       console.log(error);
@@ -115,13 +115,8 @@ const LoginScreen = ({ navigation }) => {
   }
 
   const loginPressed = async() => {
-    if(userExists(userData.email, userData.password)) {
-      // setIsLoggedIn(true);
+    setIsLoggedIn(true);
     login();
-    }
-    else {
-      Alert("Invalid email or password");
-    }
   }
 
   return (
@@ -149,7 +144,7 @@ const LoginScreen = ({ navigation }) => {
         </View>
         <Pressable
           style={styles['login-button']}
-          onPress={loginPressed}
+          onPress={login}
         >
           <Text style={styles['login-text']}>LOGIN</Text>
         </Pressable>
