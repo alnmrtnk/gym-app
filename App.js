@@ -13,6 +13,7 @@ import AuthContext from './src/contexts/AuthContext';
 import PersonalTrainingsScreen from './src/screens/PersonalTrainingsScreen';
 import GroupTrainingsScreen from './src/screens/GroupTrainingsScreen';
 import TrainerScreen from './src/screens/TrainerScreen';
+import { ToastProvider } from 'react-native-toast-notifications'
 
 const Stack = createNativeStackNavigator();
 
@@ -34,62 +35,64 @@ export default function App() {
     'nunito-semibold-italic': require('./assets/fonts/Nunito-SemiBoldItalic.ttf')
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   if (fontsLoaded) {
     return (
-      <AuthContext.Provider value={{ setIsLoggedIn }}>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ animation: 'none' }} >
-            {!isLoggedIn ? (
-              <Stack.Group>
-                <Stack.Screen
-                  name="Login"
-                  component={LoginScreen}
-                />
-                <Stack.Screen
-                  name="SignUp"
-                  component={SignUpScreen}
-                >
-                </Stack.Screen>
-              </Stack.Group>
-            ) : (
-              <Stack.Group>
-                <Stack.Screen
-                  name="Food"
-                  component={FoodScreen}
-                />
-                <Stack.Screen
-                  name="Home"
-                  component={HomeScreen}
-                />
-                <Stack.Screen
-                  name="Gym"
-                  component={GymScreen}
-                />
-                <Stack.Screen
-                  name="PersonalTrainings"
-                  component={PersonalTrainingsScreen}
-                />
-                <Stack.Screen
-                 name="Trainer"
-                 component={TrainerScreen}
-                 initialParams={{ index: 0 }}
-                />
-                <Stack.Screen
-                  name="GroupTrainings"
-                  component={GroupTrainingsScreen}
-                />
-                
-                <Stack.Screen
-                  name="Settings"
-                  component={SettingsScreen}
-                />
-              </Stack.Group>
-            )}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </AuthContext.Provider>
+      <ToastProvider>
+        <AuthContext.Provider value={{ setIsLoggedIn }}>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ animation: 'none' }} >
+              {!isLoggedIn ? (
+                <Stack.Group>
+                  <Stack.Screen
+                    name="Login"
+                    component={LoginScreen}
+                  />
+                  <Stack.Screen
+                    name="SignUp"
+                    component={SignUpScreen}
+                  >
+                  </Stack.Screen>
+                </Stack.Group>
+              ) : (
+                <Stack.Group>
+                  <Stack.Screen
+                    name="Food"
+                    component={FoodScreen}
+                  />
+                  <Stack.Screen
+                    name="Home"
+                    component={HomeScreen}
+                  />
+                  <Stack.Screen
+                    name="Gym"
+                    component={GymScreen}
+                  />
+                  <Stack.Screen
+                    name="PersonalTrainings"
+                    component={PersonalTrainingsScreen}
+                  />
+                  <Stack.Screen
+                    name="Trainer"
+                    component={TrainerScreen}
+                    initialParams={{ index: 0 }}
+                  />
+                  <Stack.Screen
+                    name="GroupTrainings"
+                    component={GroupTrainingsScreen}
+                  />
+
+                  <Stack.Screen
+                    name="Settings"
+                    component={SettingsScreen}
+                  />
+                </Stack.Group>
+              )}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </AuthContext.Provider>
+      </ToastProvider>
     );
   }
 

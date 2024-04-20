@@ -2,6 +2,7 @@ import React from 'react';
 import HeaderBottomMenuComponent from '../../components/HeaderBottomMenuComponent';
 import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../../../assets/Colors';
+import MacrosComponent from '../../components/MacrosComponent';
 
 const styles = StyleSheet.create({
     contentContainer: {
@@ -19,7 +20,7 @@ const FoodScreen = ({ navigation }) => {
         <View>
             <HeaderBottomMenuComponent currentPage={2} navigation={navigation}>
                 <View style={styles.contentContainer}>
-                    <Text>Food Screen</Text>
+                    <MacrosComponent/>
                 </View>
             </HeaderBottomMenuComponent>
         </View>

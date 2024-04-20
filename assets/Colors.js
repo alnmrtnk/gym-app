@@ -11,6 +11,7 @@ const Colors = {
     VIOLET_ACCENT_COLOR: '#6930C3',
     DARK_GREY_COLOR: '#9B9B9B',
     GROUP_DATE_COLOR: 'rgba(105, 48, 195, 0.68)',
+    LIGHT_GREY_COLOR: '#BCBCBC',
 }
 
 export default Colors;

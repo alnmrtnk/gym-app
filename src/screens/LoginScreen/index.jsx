@@ -7,6 +7,9 @@ import EmailSvg from "../../../assets/email.svg";
 import Colors from '../../../assets/Colors';
 import { userExists } from '../../services/userService';
 import AuthContext from '../../contexts/AuthContext';
+import axios from "axios";
+import devConfig from "../../../config.development";
+import { useToast } from "react-native-toast-notifications";
 
 const styles = StyleSheet.create({
   container: {
@@ -89,15 +92,32 @@ const styles = StyleSheet.create({
 const LoginScreen = ({ navigation }) => {
   const [userData, setUserData] = useState({email: "", password: "" });
   const {setIsLoggedIn} =  useContext(AuthContext);
+  const toast = useToast();
 
   const signUpPressed = () => {
     navigation.navigate("SignUp");
     navigation.setOptions({ setIsLoggedIn: setIsLoggedIn });
   }
 
+  const login = async() => {
+    try {
+      const response = await axios.post(`${devConfig.API_URL}/login`, {
+        email: userData.email,
+        password: userData.password,
+      });
+
+      console.log(response.data);
+    }
+    catch (error) {
+      console.log(error);
+      toast.show("User not found", { type: "danger", placement: "top"});
+    }
+  }
+
   const loginPressed = async() => {
     if(userExists(userData.email, userData.password)) {
-      setIsLoggedIn(true);
+      // setIsLoggedIn(true);
+    login();
     }
     else {
       Alert("Invalid email or password");
