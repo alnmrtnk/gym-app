@@ -76,11 +76,14 @@ const styles = StyleSheet.create({
     }
 });
 
-const MacrosComponent = () => {
-    const Carbohydrates = { consumed: 50, general: 165 };
-    const Fats = { consumed: 35, general: 65 };
-    const Proteins = { consumed: 65, general: 85 };
-    const Calories = { consumed: 510, general: 1510 };
+const MacrosComponent = ({
+    totalCalories, totalProtein, totalFat, totalCarbs, 
+    caloriesRestriction, proteinRestriction, fatRestriction, carbsRestriction
+}) => {
+    const Carbohydrates = { consumed: totalCarbs, general: carbsRestriction };
+    const Fats = { consumed: totalFat, general: fatRestriction };
+    const Proteins = { consumed: totalProtein, general: proteinRestriction };
+    const Calories = { consumed: totalCalories, general: caloriesRestriction };
 
     return (
         <View style={styles.container}>
