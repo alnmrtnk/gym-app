@@ -37,11 +37,23 @@ export default function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [userId, setUserId] = useState(null);
+  const dateTime = {
+    current: new Date(),
+    future: new Date((new Date()).getTime() + 60 * 60 * 1000),
+  };
+
+  const [dateFrom, setDateFrom] = useState(dateTime.current);
+  const [dateTo, setDateTo] = useState(dateTime.future);
 
   if (fontsLoaded) {
     return (
       <ToastProvider>
-        <AuthContext.Provider value={{ setIsLoggedIn, setUserId, userId }}>
+        <AuthContext.Provider value={{ 
+          setIsLoggedIn, 
+          setUserId, userId,
+          dateFrom, setDateFrom,
+          dateTo, setDateTo 
+          }}>
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ animation: 'none' }} >
               {!isLoggedIn ? (

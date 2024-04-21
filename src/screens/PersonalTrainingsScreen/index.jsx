@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import HeaderBottomMenuComponent from '../../components/HeaderBottomMenuComponent';
 import Colors from '../../../assets/Colors';
@@ -8,6 +8,7 @@ import TrainerContainer from '../../components/TrainerContainer';
 import { useToast } from 'react-native-toast-notifications';
 import axios from "axios";
 import devConfig from "../../../config.development";
+import AuthContext from '../../contexts/AuthContext';
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -29,8 +30,7 @@ const PersonalTrainingsScreen = ({ navigation, route }) => {
   const [initialized, setInitialized] = React.useState(false);
   const toast = useToast();
   const [data, setData] = React.useState([]);
-  const { dateFrom, dateTo} = route.params;
-  console.log(dateFrom, dateTo);
+  const {dateFrom, dateTo} = useContext(AuthContext);
 
   const openTrainerScreen = (id) => {
     navigation.navigate('Trainer', { id: id });
@@ -46,7 +46,12 @@ const PersonalTrainingsScreen = ({ navigation, route }) => {
 
   const getData = async() => {
     try{
-      const response = await axios.get(`${devConfig.API_URL}/trainers`, {dateFrom, dateTo});
+      const params = {
+        dateFrom: dateFrom,
+        dateTo: dateTo
+      }
+
+      const response = await axios.get(`${devConfig.API_URL}/trainers`, {params});
       setData(response.data);
     }
     catch(error){
