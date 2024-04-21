@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import CircularGraph from '../CircularGraph';
 import Colors from '../../../assets/Colors';
 import CircularProgressChart from '../CircularProgressChart';
 
@@ -80,6 +79,7 @@ const MacrosComponent = ({
     totalCalories, totalProtein, totalFat, totalCarbs, 
     caloriesRestriction, proteinRestriction, fatRestriction, carbsRestriction
 }) => {
+    console.log(totalCalories, totalProtein, totalFat, totalCarbs, caloriesRestriction, proteinRestriction, fatRestriction, carbsRestriction);
     const Carbohydrates = { consumed: totalCarbs, general: carbsRestriction };
     const Fats = { consumed: totalFat, general: fatRestriction };
     const Proteins = { consumed: totalProtein, general: proteinRestriction };

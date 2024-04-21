@@ -62,6 +62,7 @@ const FoodScreen = ({ navigation }) => {
     });
     
     const openAddForm = () => {
+        navigation.navigate("AddProduct");
     }
 
     const deleteConsumption = async(consumption) => {

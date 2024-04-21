@@ -55,7 +55,7 @@ const Consumptions = ({ openAddForm, deleteConsumption, consumptions }) => {
                             </Pressable>
                         </DataTable.Title>
                     </DataTable.Header>
-                    {consumptions.slice(from, to).map((consumption) => (
+                    {consumptions.length ? consumptions.slice(from, to).map((consumption) => (
                         <DataTable.Row key={consumption._id}>
                             <DataTable.Cell style={styles.tableCell}>
                                 <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.name}</Text>
@@ -64,23 +64,22 @@ const Consumptions = ({ openAddForm, deleteConsumption, consumptions }) => {
                                 <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.calories}</Text>
                             </DataTable.Cell>
                             <DataTable.Cell numeric style={styles.tableCell}>
-                            <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.protein}</Text>
+                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.protein}</Text>
                             </DataTable.Cell>
                             <DataTable.Cell numeric style={styles.tableCell}>
-                            <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.fat}</Text>
-
-                                </DataTable.Cell>
+                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.fat}</Text>
+                            </DataTable.Cell>
                             <DataTable.Cell numeric style={styles.tableCell}>
-                            <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.carbs}</Text>
-                                </DataTable.Cell>
+                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.carbs}</Text>
+                            </DataTable.Cell>
                             <DataTable.Cell style={styles.tableCell}>
-                            <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.amount} {consumption.unit}</Text>
+                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.amount} {consumption.unit}</Text>
                             </DataTable.Cell>
                             <DataTable.Cell style={styles.tableCell} onPress={() => deleteConsumption(consumption)}>
                                 <DeleteSVG width={20} height={20} />
                             </DataTable.Cell>
                         </DataTable.Row>
-                    ))}
+                    )): null}
                 </View>
                 <DataTable.Pagination
                     page={page}

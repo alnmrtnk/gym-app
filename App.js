@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text, View } from 'react-native';
+import { Keyboard, StyleSheet, Text, Touchable, TouchableWithoutFeedback, View } from 'react-native';
 import LoginScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import HomeScreen from './src/screens/HomeScreen';
@@ -14,6 +14,7 @@ import PersonalTrainingsScreen from './src/screens/PersonalTrainingsScreen';
 import GroupTrainingsScreen from './src/screens/GroupTrainingsScreen';
 import TrainerScreen from './src/screens/TrainerScreen';
 import { ToastProvider } from 'react-native-toast-notifications'
+import AddingProductScreen from './src/screens/AddingProductScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,7 +48,8 @@ export default function App() {
 
   if (fontsLoaded) {
     return (
-      <ToastProvider>
+      <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }}>
+        <ToastProvider>
         <AuthContext.Provider value={{ 
           setIsLoggedIn, 
           setUserId, userId,
@@ -70,6 +72,10 @@ export default function App() {
                 </Stack.Group>
               ) : (
                 <Stack.Group>
+                  <Stack.Screen
+                    name="AddProduct"
+                    component={AddingProductScreen}
+                  />
                   <Stack.Screen
                     name="Food"
                     component={FoodScreen}
@@ -106,6 +112,7 @@ export default function App() {
           </NavigationContainer>
         </AuthContext.Provider>
       </ToastProvider>
+      </TouchableWithoutFeedback>
     );
   }
 

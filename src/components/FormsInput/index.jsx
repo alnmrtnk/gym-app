@@ -1,7 +1,8 @@
 import React from 'react';
-import Colors from '../../../assets/Colors';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { TextInput } from 'react-native-paper';
+import Colors from '../../../assets/Colors';
+import IconSVG from '../../../assets/fire.svg';
 
 const styles = StyleSheet.create({
     "input-container": {
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.SECONDARY_BACKGROUND_COLOR,
         margin: "5%, 0%",
         padding: "2%",
-        borderRadius: 20, 
+        borderRadius: 15,
     },
     input: {
         backgroundColor: 'transparent',
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
 });
 
 const FormsInput = (props) => {
-    const { Icon, onChangeText, ...input } = props;
+    const { Icon = IconSVG, onChangeText, ...input } = props;
 
     return (
         <View style={styles["input-container"]}>
