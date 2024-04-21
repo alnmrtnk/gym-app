@@ -56,8 +56,6 @@ const GymScreen = ({ navigation }) => {
     setDateFrom(convertToUTC(dateFrom));
     setDateTo(convertToUTC(dateTo));
 
-    console.log("got", dateFrom, dateTo);
-
     const openingMinutes = OPENING_TIME.hour * 60 + OPENING_TIME.minute;
     const closingMinutes = CLOSING_TIME.hour * 60 + CLOSING_TIME.minute;
 

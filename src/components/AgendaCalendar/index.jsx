@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { Agenda } from 'react-native-calendars';
-import groupTrainingsData from "../../groupTrainings";
 import GroupTrainingItem from '../GroupTrainingItem';
 import Colors from '../../../assets/Colors';
 
-const AgendaCalendar = () => {
+const AgendaCalendar = ({ key, groupTrainingsData, register }) => {
     const CALENDAR_THEME = {
         backgroundColor: '#ffffff',
         calendarBackground: '#ffffff',
@@ -34,48 +33,42 @@ const AgendaCalendar = () => {
         textDayHeaderFontSize: 14
     };
 
-    // Specify how each date should be rendered. day can be undefined if the item is not first in that day
     const renderEmptyDay = () => {
         return <View />;
     };
 
-    //returns card for empty slots.
     const renderEmptyItem = () => {
-        return (
-            <Text >
-                No slots in the calendar
-            </Text>
-        );
+        return <Text style={{fontFamily: "nunito-bold", fontSize: 20, textAlign: 'center'}}>
+            Unfortunately, there are no more training sessions today.
+        </Text>;
     };
 
-    // Specify how each item should be rendered in the agenda
     const renderItems = (item, firstItemInDay) => {
-        return <GroupTrainingItem training={item} showHeader={firstItemInDay}/>;
-    }
+        return <GroupTrainingItem training={item} showHeader={firstItemInDay} register={register}/>;
+    };
 
     const items = groupTrainingsData.reduce((acc, item) => {
-        const { startTime, date, duration, name, trainer, maxParticipants, participants } = item;
-        /*
-        startTime, date, duration, name, trainer, maxParticipants, participants
-        */
+        const { _id, start_time, date, duration, name, trainer, max_participants, participants } = item;
+
         if (!acc[date]) {
             acc[date] = [];
         }
-        acc[date].push({ startTime, date, duration, name, trainer, maxParticipants, participants });
+        acc[date].push({ _id, start_time, date, duration, name, trainer, max_participants, participants });
         return acc;
     }, {});
+
 
     return (
         <View style={{flex: 1}}>
             <Agenda
-                items = {items}
+                items={items}
                 renderDay={renderEmptyDay}
                 renderEmptyData={renderEmptyItem}
                 renderItem={renderItems}
                 scrollEnabled={true}
-                selected={new Date().toISOString().split('T')[0]} //Initially selected day
-                hideKnob={false} // Hide knob button. Default = false
-                showClosingKnob // When `true` and `hideKnob` prop is `false`, the knob will always be visible and the user will be able to drag the knob up and close the calendar. Default = false
+                selected={new Date().toISOString().split('T')[0]}
+                hideKnob={false}
+                showClosingKnob 
                 theme={{
                     ...CALENDAR_THEME,
                 }}
