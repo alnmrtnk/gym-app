@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import HeaderBottomMenuComponent from '../../components/HeaderBottomMenuComponent';
 import Colors from '../../../assets/Colors';
 import PersonalGroupTrainingsSwitch from '../../components/PersonalGroupTrainingsSwitch';
-//import data from '../../trainers';
 import TrainerContainer from '../../components/TrainerContainer';
 import { useToast } from 'react-native-toast-notifications';
 import axios from "axios";
@@ -30,7 +29,7 @@ const PersonalTrainingsScreen = ({ navigation, route }) => {
   const [initialized, setInitialized] = React.useState(false);
   const toast = useToast();
   const [data, setData] = React.useState([]);
-  const {dateFrom, dateTo} = useContext(AuthContext);
+  const {dateFrom, dateTo, userId} = useContext(AuthContext);
 
   const openTrainerScreen = (id) => {
     navigation.navigate('Trainer', { id: id });
@@ -48,10 +47,12 @@ const PersonalTrainingsScreen = ({ navigation, route }) => {
     try{
       const params = {
         dateFrom: dateFrom,
-        dateTo: dateTo
+        dateTo: dateTo,
+        userId: userId
       }
 
       const response = await axios.get(`${devConfig.API_URL}/trainers`, {params});
+      
       setData(response.data);
     }
     catch(error){

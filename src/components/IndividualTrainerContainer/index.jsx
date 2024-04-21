@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Image, View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import Star from '../../../assets/star.svg';
 import Colors from '../../../assets/Colors';
+import axios from 'axios';
+import devConfig from '../../../config.development';
+import { useToast } from 'react-native-toast-notifications';
+import AuthContext from '../../contexts/AuthContext';
 
 const styles = StyleSheet.create({
 	container: {
@@ -62,15 +66,12 @@ const styles = StyleSheet.create({
 	}
 })
 
-const IndividualTrainerContainer = ({ trainer }) => {
+const IndividualTrainerContainer = ({ trainer, bookTraining }) => {
+	const toast = useToast();
+	const {userId} = useContext(AuthContext);
 	const splitDate = (date) => {
 		return date.split('-').reverse().join('.');
 	}
-
-	const convertTime = (time) => {
-		return time.toTimeString().substring(0, 5);
-	}
-
 
 	return (
 		<View style={styles.container}>
@@ -84,7 +85,6 @@ const IndividualTrainerContainer = ({ trainer }) => {
 				{
 					trainer.free_hours ? trainer.free_hours.map((freeHour, index) => {
 						const hours = freeHour.hours;
-						console.log(hours);
 
 						return hours.map((hour, index) => {
 							return (
@@ -95,8 +95,10 @@ const IndividualTrainerContainer = ({ trainer }) => {
 									<Text style={styles.hours}>
 										{hour.time_from} - {hour.time_to}
 									</Text>
-									<Pressable>
-										<Text style={{ color: Colors.PRIMARY_COLOR, fontFamily: "nunito-bold", fontSize: 16 }}>Book</Text>
+									<Pressable onPress={() => bookTraining(freeHour.date, hour)}>
+										<Text style={{ color: Colors.PRIMARY_COLOR, fontFamily: "nunito-bold", fontSize: 16 }}>
+											{hour.client_id === userId ? "Cancel" : "Book"}
+										</Text>
 									</Pressable>
 								</View>
 							);
