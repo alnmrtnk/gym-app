@@ -35,7 +35,7 @@ export default function App() {
     'nunito-semibold-italic': require('./assets/fonts/Nunito-SemiBoldItalic.ttf')
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [userId, setUserId] = useState(null);
 
   if (fontsLoaded) {

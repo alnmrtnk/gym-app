@@ -5,6 +5,9 @@ import Colors from '../../../assets/Colors';
 import PersonalGroupTrainingsSwitch from '../../components/PersonalGroupTrainingsSwitch';
 import data from '../../trainers';
 import IndividualTrainerContainer from '../../components/IndividualTrainerContainer';
+import axios from "axios";
+import devConfig from "../../../config.development";
+import { useToast } from 'react-native-toast-notifications';
 
 const styles = StyleSheet.create({
     contentContainer: {
@@ -23,9 +26,28 @@ const styles = StyleSheet.create({
   })
 
 const TrainerScreen = ({navigation, route}) => {
-    console.log(route.params.index);
+    console.log(route.params.id);
+    const toast = useToast();
+    const [trainer, setData] = React.useState({name: "", points: 0, imgURL: '', free_hours: []});
+    const [initialized, setInitialized] = React.useState(false);
 
-    const trainer = data[route.params.index];
+    React.useEffect(() => {
+        if(!initialized) {
+            setInitialized(true);
+
+            getTrainer();
+        }
+    });
+
+    const getTrainer = async() => {
+        try{
+            const response = await axios.get(`${devConfig.API_URL}/trainers/${route.params.id}`);
+            setData(response.data);
+        }
+        catch(error){
+            toast.show("Something went wrong on the server", { type: "danger", placement: "top" });
+        }
+    }
 
     return (
         <View>

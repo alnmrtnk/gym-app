@@ -3,10 +3,6 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Colors from '../../../assets/Colors';
 
-const OPENING_HOUR = 7;
-const CLOSING_HOUR = 23;
-const DIVIDING_DATE = (1000 * 60 * 60 * 24);
-
 const styles = StyleSheet.create({
     container: {
         display: "flex",
@@ -22,7 +18,7 @@ const styles = StyleSheet.create({
         gap: 30,
     },
     hoursSubContainer: {
-        display: "flex", 
+        display: "flex",
         flexDirection: "row",
         alignItems: "center",
     },
@@ -32,70 +28,62 @@ const styles = StyleSheet.create({
     }
 });
 
-function getNextAvailableTime(currentDate) {
-    const currentHour = currentDate.getHours() + 1;
+const OPENING_TIME = { hour: 7, minute: 0 };
+const CLOSING_TIME = { hour: 22, minute: 0 };
+const DIVIDING_DATE = (1000 * 60 * 60 * 24);
 
-    if (currentHour < OPENING_HOUR) {
-        currentDate.setHours(OPENING_HOUR);
-    }
-    else if (currentHour >= CLOSING_HOUR) {
-        currentDate.setDate(currentDate.getDate() + 1);
-        currentDate.setHours(OPENING_HOUR);
-        currentDate.setMinutes(0);
-    }
-
-    const oneHourInMil = 60 * 60 * 1000;
-
-    const futureTimeStamp = new Date(currentDate.getTime() + oneHourInMil);
-
-    if (futureTimeStamp.getHours() > CLOSING_HOUR) {
-        futureTimeStamp.setHours(CLOSING_HOUR);
-        futureTimeStamp.setMinutes(0);
-    }
-
-
-    return { current: currentDate, future: futureTimeStamp };
-}
-
-
-const DateTimePicking = () => {
-    const dateTime = getNextAvailableTime(new Date());
-
-
-    const [date, setDate] = useState(dateTime.current);
-    const [dateTo, setDateTo] = useState(dateTime.future);
-
-
+const DateTimePicking = ({ dateFrom, setDateFrom, dateTo, setDateTo }) => {
     const onChangeDate = (event, selectedDate) => {
-        const nowDate = new Date();
-
-        if (selectedDate.getTime() / DIVIDING_DATE > nowDate.getTime() / DIVIDING_DATE) {
-            selectedDate.setHours(OPENING_HOUR);
-            selectedDate.setMinutes(0);
-            setDate(selectedDate);
-
-            const futureDate = new Date(selectedDate.getTime() + (60 * 60 * 1000));
-            setDateTo(futureDate);
+        if (selectedDate) {
+            const newDate = new Date(dateFrom);
+            newDate.setFullYear(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+            setDateFrom(newDate);
         }
     };
+    
+    
 
-    onChangeFromTime = (event, selectedDate) => {
-        if (selectedDate.getHours() >= OPENING_HOUR && selectedDate.getHours() <= CLOSING_HOUR) {
-            setDate(selectedDate);
-        }
-    };
+    const onChangeFromTime = (event, selectedDate) => {
+        if (selectedDate) {
+            const newDate = new Date(dateFrom);
+    
+            newDate.setHours(selectedDate.getHours(), selectedDate.getMinutes());
+    
+            const currentDate = new Date();
+    
+            if (newDate > currentDate) {
+                setDateFrom(newDate);
+            } else {
+                setDateFrom(currentDate);
+            }
 
-    onChangeToTime = (event, selectedDate) => {
-        if (selectedDate.getHours() >= OPENING_HOUR && selectedDate.getHours() <= CLOSING_HOUR) {
-            setDateTo(selectedDate);
+            if(newDate > dateTo) {
+                const newDateTo = new Date(newDate.getTime() + (60 * 60 * 1000));
+                setDateTo(newDateTo);
+            }
         }
-    }
+    };    
+
+    const onChangeToTime = (event, selectedDate) => {
+        if (selectedDate) {
+            const newDateTo = new Date(dateTo);
+    
+            newDateTo.setHours(selectedDate.getHours(), selectedDate.getMinutes(), 0, 0);
+    
+            if (newDateTo <= dateFrom) {
+                const adjustedDateTo = new Date(dateFrom.getTime() + (60 * 60 * 1000));  
+                setDateTo(adjustedDateTo);
+            } else {
+                setDateTo(newDateTo);
+            }
+        }
+    };    
 
     return (
         <View style={styles.container}>
             <DateTimePicker
                 testID="dateTimePicker"
-                value={date}
+                value={dateFrom}
                 mode={'date'}
                 is24Hour={true}
                 onChange={onChangeDate}
@@ -105,7 +93,7 @@ const DateTimePicking = () => {
                     <Text style={styles.text}>From: </Text>
                     <DateTimePicker
                         testID="dateTimePicker"
-                        value={date}
+                        value={dateFrom}
                         mode={'time'}
                         is24Hour={true}
                         onChange={onChangeFromTime}

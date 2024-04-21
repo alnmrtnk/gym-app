@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import HeaderBottomMenuComponent from '../../components/HeaderBottomMenuComponent';
 import PersonalGroupTrainingsSwitch from '../../components/PersonalGroupTrainingsSwitch';
 import Colors from '../../../assets/Colors';
 import DateTimePicking from '../../components/DateTimePicking';
 import GymInfoData from '../../components/GymInfoData';
+import { useToast } from 'react-native-toast-notifications';
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -32,21 +33,48 @@ const styles = StyleSheet.create({
     color: Colors.BUTTONS_TEXT_COLOR,
     fontFamily: "nunito-bold",
     fontWeight: "bold",
-},
+  },
 });
 
+const OPENING_TIME = { hour: 7, minute: 0 };
+const CLOSING_TIME = { hour: 22, minute: 0 };
+
 const GymScreen = ({ navigation }) => {
+  const toast = useToast();
+  const dateTime = {
+    current: new Date(),
+    future: new Date((new Date()).getTime() + 60 * 60 * 1000),
+  };
+
+  const [dateFrom, setDateFrom] = useState(dateTime.current);
+  const [dateTo, setDateTo] = useState(dateTime.future);
+
   const switchPage = () => {
-    navigation.navigate('PersonalTrainings');
+    const openingMinutes = OPENING_TIME.hour * 60 + OPENING_TIME.minute;
+    const closingMinutes = CLOSING_TIME.hour * 60 + CLOSING_TIME.minute;
+  
+    const dateFromMinutes = dateFrom.getHours() * 60 + dateFrom.getMinutes();
+    const dateToMinutes = dateTo.getHours() * 60 + dateTo.getMinutes();
+  
+    const isValidDateFrom = dateFromMinutes >= openingMinutes && dateFromMinutes < closingMinutes;
+    const isValidDateTo = dateToMinutes >= openingMinutes && dateToMinutes < closingMinutes;
+  
+    if (!isValidDateFrom || !isValidDateTo) {
+      toast.show("Gym is not open at the selected times. Please select a different time.", { type: "info", placement: "top" })
+      return;
+    }
+  
+    navigation.navigate('PersonalTrainings', { dateFrom, dateTo });
   }
+  
 
   return (
     <View>
       <HeaderBottomMenuComponent currentPage={1} navigation={navigation}>
         <View style={styles.contentContainer}>
           <PersonalGroupTrainingsSwitch index={0} navigation={navigation} />
-          <DateTimePicking />
-          <GymInfoData/>
+          <DateTimePicking dateFrom={dateFrom} setDateFrom={setDateFrom} dateTo={dateTo} setDateTo={setDateTo}/>
+          <GymInfoData />
           <Pressable style={styles.findButton} onPress={switchPage}>
             <Text style={styles.buttonText}>Find a training</Text>
           </Pressable>

@@ -106,8 +106,6 @@ const LoginScreen = ({ navigation }) => {
         password: userData.password,
       });
 
-      console.log(serverResponse.data.userId);
-
       setUserId(serverResponse.data.userId);
 
       setIsLoggedIn(true);

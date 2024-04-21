@@ -63,28 +63,6 @@ const styles = StyleSheet.create({
 })
 
 const IndividualTrainerContainer = ({ trainer }) => {
-	const sessionDuration = 1;
-
-	const createTrainingsSession = (freeHours) => {
-		const sessions = [];
-		freeHours.forEach(freeHour => {
-			let totalDuration = parseInt(freeHour.duration.match(/\d+/)[0], 10);
-			let [hours, minutes] = freeHour.time.split(':').map(Number);
-			let startTime = new Date();
-			startTime.setHours(hours, minutes);
-
-			while (totalDuration > 0) {
-				const endTime = new Date(startTime.getTime());
-				endTime.setHours(endTime.getHours() + sessionDuration);
-				sessions.push({ startTime, endTime });
-				totalDuration -= sessionDuration;
-				startTime = endTime;
-			}
-		});
-
-		return sessions;
-	}
-
 	const splitDate = (date) => {
 		return date.split('-').reverse().join('.');
 	}
@@ -96,7 +74,7 @@ const IndividualTrainerContainer = ({ trainer }) => {
 
 	return (
 		<View style={styles.container}>
-			<Image style={{ width: 215, height: 215, borderRadius: 120 }} source={trainer.imgURL} />
+			<Image style={{ width: 215, height: 215, borderRadius: 120 }} source={{uri: trainer.imgURL}} />
 			<Text style={styles.nameText}>{trainer.name}</Text>
 			<View style={styles.pointContainer}>
 				<Text style={styles.pointText}>{trainer.points}/5.0</Text>
@@ -104,17 +82,18 @@ const IndividualTrainerContainer = ({ trainer }) => {
 			</View>
 			<ScrollView style={styles.schedule}>
 				{
-					trainer.freeHours && trainer.freeHours.map((freeHour, index) => {
-						const sessions = createTrainingsSession(freeHour.hours);
+					trainer.free_hours ? trainer.free_hours.map((freeHour, index) => {
+						const hours = freeHour.hours;
+						console.log(hours);
 
-						return sessions.map((session, index) => {
+						return hours.map((hour, index) => {
 							return (
 								<View key={index} style={styles.freeHours}>
 									<Text style={styles.date}>
 										{splitDate(freeHour.date)}
 									</Text>
 									<Text style={styles.hours}>
-										{convertTime(session.startTime)} - {convertTime(session.endTime)}
+										{hour.time_from} - {hour.time_to}
 									</Text>
 									<Pressable>
 										<Text style={{ color: Colors.PRIMARY_COLOR, fontFamily: "nunito-bold", fontSize: 16 }}>Book</Text>
@@ -122,7 +101,7 @@ const IndividualTrainerContainer = ({ trainer }) => {
 								</View>
 							);
 						});
-					})
+					}) : <Text style={{ color: Colors.DARK_GREY_COLOR, fontFamily: "nunito-bold", fontSize: 16 }}>No free hours</Text>
 				}
 			</ScrollView>
 		</View>

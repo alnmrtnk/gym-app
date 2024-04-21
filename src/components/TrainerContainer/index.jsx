@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 const TrainerContainer = ({ trainer }) => {
     return (
         <View style={styles.container}>
-            <Image style={{ width: 100, height: 100, borderRadius: 120 }} source={trainer.imgURL} />
+            <Image style={{ width: 100, height: 100, borderRadius: 120 }} source={{uri: trainer.imgURL}} />
             <View style={styles.infoContainer}>
                 <Text style={styles.nameText}>{trainer.name}</Text>
                 <View style={styles.pointContainer}>
