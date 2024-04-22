@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Pressable, Keyboard } from 'react-native';
 import HeaderBottomMenuComponent from '../../components/HeaderBottomMenuComponent';
 import Colors from '../../../assets/Colors';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import PlusSVG from '../../../assets/plus.svg';
 import FormsInput from '../../components/FormsInput';
 import { useToast } from 'react-native-toast-notifications';
 import AuthContext from '../../contexts/AuthContext';
+import MinusSVG from '../../../assets/minus.svg';
 
 const styles = StyleSheet.create({
     contentContainer: {
@@ -46,7 +47,6 @@ const AddingProductScreen = ({ navigation }) => {
     const getProducts = async () => {
         try {
             const response = await axios.get(`${devConfig.API_URL}/products`);
-            console.log(response.data);
             setProducts(response.data);
         }
         catch (error) {
@@ -78,7 +78,11 @@ const AddingProductScreen = ({ navigation }) => {
         <View>
             <HeaderBottomMenuComponent currentPage={2} navigation={navigation}>
                 <View style={styles.contentContainer}>
+                    <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Text style={styles.header}>Products Adding</Text>
+                    <Pressable onPress={() => Keyboard.dismiss()} style={{width:50, height: 50}}>
+                    </Pressable>
+                    </View>
                     <View>
                         <View style={{display: "flex", flexDirection: "row",  justifyContent: "center", alignItems: "center"}}>
                             <FormsInput

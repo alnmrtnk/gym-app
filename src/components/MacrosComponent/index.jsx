@@ -79,7 +79,6 @@ const MacrosComponent = ({
     totalCalories, totalProtein, totalFat, totalCarbs, 
     caloriesRestriction, proteinRestriction, fatRestriction, carbsRestriction
 }) => {
-    console.log(totalCalories, totalProtein, totalFat, totalCarbs, caloriesRestriction, proteinRestriction, fatRestriction, carbsRestriction);
     const Carbohydrates = { consumed: totalCarbs, general: carbsRestriction };
     const Fats = { consumed: totalFat, general: fatRestriction };
     const Proteins = { consumed: totalProtein, general: proteinRestriction };
@@ -90,7 +89,7 @@ const MacrosComponent = ({
             <Text style={styles.header}>Macros</Text>
             <View style={styles.graphsContainer}>
                 <CircularProgressChart
-                    data={[Carbohydrates.consumed / Carbohydrates.general]}
+                    data={[(Carbohydrates.consumed / Carbohydrates.general) < 1 ? Carbohydrates.consumed / Carbohydrates.general : (Carbohydrates.consumed - Carbohydrates.general) / Carbohydrates.consumed]}
                     topText={"Carbs"}
                     InnerText={
                         <View style={styles.innerTextContainer}>
@@ -102,7 +101,7 @@ const MacrosComponent = ({
                     textColor={"83, 144, 217"}
                 />
                 <CircularProgressChart
-                    data={[Fats.consumed / Fats.general]}
+                    data={[(Fats.consumed / Fats.general) < 1 ? Fats.consumed / Fats.general : (Fats.consumed - Fats.general) / Fats.consumed]}
                     topText={"Fats"}
                     InnerText={
                         <View style={styles.innerTextContainer}>
@@ -114,7 +113,7 @@ const MacrosComponent = ({
                     textColor={"72, 191, 227"}
                 />
                 <CircularProgressChart
-                    data={[Proteins.consumed / Proteins.general]}
+                    data={[(Proteins.consumed / Proteins.general) < 1 ? Proteins.consumed / Proteins.general : (Proteins.consumed - Proteins.general) / Proteins.consumed]}
                     topText={"Proteins"}
                     InnerText={
                         <View style={styles.innerTextContainer}>

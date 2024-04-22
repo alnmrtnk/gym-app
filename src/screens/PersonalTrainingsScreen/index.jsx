@@ -53,6 +53,8 @@ const PersonalTrainingsScreen = ({ navigation, route }) => {
 
       const response = await axios.get(`${devConfig.API_URL}/trainers`, {params});
       
+      console.log(params);
+
       setData(response.data);
     }
     catch(error){

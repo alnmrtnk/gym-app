@@ -26,12 +26,12 @@ const FoodScreen = ({ navigation }) => {
     const {userId} = React.useContext(AuthContext);
     const [initialized, setInitialized] = React.useState(false);
     const [totalMacros, setTotalMacros] = React.useState({calories: 0, protein: 0, fat: 0, carbs: 0});
-    const [restrictions, setRestrictions] = React.useState({calories: 0, protein: 0, fats: 0, carbs: 0});
+    const [restrictions, setRestrictions] = React.useState({calories: 1, protein: 1, fats: 1, carbs: 1});
 
     const getConsumptions = async() => {
         try{
             const response = await axios.get(`${devConfig.API_URL}/consumptions/${userId}`);
-            console.log(response.data);
+            
             setConsumptions(response.data);
         }
         catch(error){
@@ -43,7 +43,6 @@ const FoodScreen = ({ navigation }) => {
     const getMacros = async() => {  
         try{
             const response = await axios.get(`${devConfig.API_URL}/macros/${userId}`);
-            console.log(response.data);
             setTotalMacros(response.data.totalMacros);
             setRestrictions(response.data.restrictions);
         }
@@ -67,7 +66,6 @@ const FoodScreen = ({ navigation }) => {
 
     const deleteConsumption = async(consumption) => {
         try{
-            console.log(consumption._id);
             await axios.delete(`${devConfig.API_URL}/consumptions/${consumption._id}`);
             toast.show("Consumption deleted successfully", {type: "success", position: "top"});
             await getConsumptions();

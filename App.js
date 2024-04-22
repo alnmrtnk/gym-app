@@ -21,6 +21,7 @@ const socket = io(devConfig.SOCKET_URL);
 import axios from 'axios';
 import { useToast } from 'react-native-toast-notifications';
 import NotificationsScreen from './src/screens/NotificationsScreen';
+import GoalScreen from './src/screens/GoalScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,23 +57,30 @@ export default function App() {
   const [notifications, setNotifications] = useState([]);
 
   const fetchNotifications = async (read) => {
-    try{
+    try {
       let response = null;
-      if(read){
+      if (read) {
         response = await axios.put(`${devConfig.API_URL}/notifications/${userId}`);
       }
-      else{
+      else {
         response = await axios.get(`${devConfig.API_URL}/notifications/${userId}`);
       }
       setNotifications(response.data);
     }
     catch {
-      toast.show('Failed to fetch notifications', { type: 'danger', placement: 'top'});
+      toast.show('Failed to fetch notifications', { type: 'danger', placement: 'top' });
     }
   }
 
+  const logout = () => {
+    setIsLoggedIn(false);
+    setUserId('');
+    socket.disconnect();
+    setConnectionEstablished(false);
+  }
+
   React.useEffect(() => {
-    if(isLoggedIn && !connectionEstablished) {
+    if (isLoggedIn && !connectionEstablished) {
       setConnectionEstablished(true);
       console.log('connecting to socket:', userId);
       socket.emit('register', { userId });
@@ -91,15 +99,15 @@ export default function App() {
 
   if (fontsLoaded) {
     return (
-      <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }}>
-        <ToastProvider>
-        <AuthContext.Provider value={{ 
-          setIsLoggedIn, 
+      <ToastProvider>
+        <AuthContext.Provider value={{
+          setIsLoggedIn,
           setUserId, userId,
           dateFrom, setDateFrom,
           dateTo, setDateTo,
-          notifications, fetchNotifications
-          }}>
+          notifications, fetchNotifications,
+          logout
+        }}>
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ animation: 'none' }} >
               {!isLoggedIn ? (
@@ -153,13 +161,16 @@ export default function App() {
                     name="Notifications"
                     component={NotificationsScreen}
                   />
+                  <Stack.Screen
+                    name='Goal'
+                    component={GoalScreen}
+                  />
                 </Stack.Group>
               )}
             </Stack.Navigator>
           </NavigationContainer>
         </AuthContext.Provider>
       </ToastProvider>
-      </TouchableWithoutFeedback>
     );
   }
 

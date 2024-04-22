@@ -29,7 +29,7 @@ const NotificationsScreen = ({ navigation }) => {
                 <View style={styles.contentContainer}>
                     <ScrollView>
                     {
-                        notifications.map((notification, index) => {
+                        [...notifications].reverse().map((notification, index) => {
                             return (
                                 <NotificationComponent key={index} notification={notification} />
                             )
