@@ -5,7 +5,6 @@ import PasswordSVG from "../../../assets/password.svg";
 import FormsInput from '../../components/FormsInput';
 import EmailSvg from "../../../assets/email.svg";
 import Colors from '../../../assets/Colors';
-import { userExists } from '../../services/userService';
 import AuthContext from '../../contexts/AuthContext';
 import axios from "axios";
 import devConfig from "../../../config.development";
@@ -24,7 +23,7 @@ const styles = StyleSheet.create({
   "container-header-input": {
     display: "row",
     alignItems: "center",
-    
+
   },
   "forget-password-container": {
     display: "flex",
@@ -90,8 +89,8 @@ const styles = StyleSheet.create({
 });
 
 const LoginScreen = ({ navigation }) => {
-  const [userData, setUserData] = useState({email: "", password: "" });
-  const {setIsLoggedIn, setUserId} =  useContext(AuthContext);
+  const [userData, setUserData] = useState({ email: "", password: "" });
+  const { setIsLoggedIn, setUserId } = useContext(AuthContext);
   const toast = useToast();
 
   const signUpPressed = () => {
@@ -99,7 +98,7 @@ const LoginScreen = ({ navigation }) => {
     navigation.setOptions({ setIsLoggedIn: setIsLoggedIn });
   }
 
-  const login = async() => {
+  const login = async () => {
     try {
       const serverResponse = await axios.post(`${devConfig.API_URL}/login`, {
         email: userData.email,
@@ -112,11 +111,11 @@ const LoginScreen = ({ navigation }) => {
     }
     catch (error) {
       console.log(error);
-      toast.show("User not found", { type: "danger", placement: "top"});
+      toast.show("User not found", { type: "danger", placement: "top" });
     }
   }
 
-  const loginPressed = async() => {
+  const loginPressed = async () => {
     setIsLoggedIn(true);
     login();
   }

@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 const HeaderBottomMenuComponent = ({ navigation, currentPage, children }) => {
   return (
     <View style={styles.container}>
-      <ScreenHeader style={styles.header} />
+      <ScreenHeader style={styles.header} notificationsIsOpened={currentPage === 4} navigation={navigation}/>
       <View style={styles.contentContainer}>
         {children}
       </View>

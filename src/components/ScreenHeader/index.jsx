@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
 
 });
 
-const ScreenHeader = () => {
+const ScreenHeader = ({notificationsIsOpened, navigation}) => {
   return (
     <View style={[styles.headerContainer, styles.elevation]}>
         <LogoSvg height={100}/>
-        <Pressable height={50}>
-            <NotificationSVG height={50}/>
+        <Pressable height={50} onPress={() => {navigation.navigate('Notifications')}}>
+            <NotificationSVG height={50} fill={notificationsIsOpened ? Colors.ACCENT_COLOR : Colors.DARK_GREY_COLOR}/>
         </Pressable>
     </View>
   );

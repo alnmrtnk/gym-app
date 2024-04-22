@@ -8,13 +8,19 @@ import { useFonts } from 'expo-font';
 import GymScreen from './src/screens/GymScreen';
 import FoodScreen from './src/screens/FoodScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import AuthContext from './src/contexts/AuthContext';
 import PersonalTrainingsScreen from './src/screens/PersonalTrainingsScreen';
 import GroupTrainingsScreen from './src/screens/GroupTrainingsScreen';
 import TrainerScreen from './src/screens/TrainerScreen';
 import { ToastProvider } from 'react-native-toast-notifications'
 import AddingProductScreen from './src/screens/AddingProductScreen';
+import io from 'socket.io-client';
+import devConfig from './config.development';
+const socket = io(devConfig.SOCKET_URL);
+import axios from 'axios';
+import { useToast } from 'react-native-toast-notifications';
+import NotificationsScreen from './src/screens/NotificationsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,7 +42,8 @@ export default function App() {
     'nunito-semibold-italic': require('./assets/fonts/Nunito-SemiBoldItalic.ttf')
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const toast = useToast();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState('66239d73ae9929dc8d7a418a');
   const dateTime = {
     current: new Date(),
@@ -45,6 +52,42 @@ export default function App() {
 
   const [dateFrom, setDateFrom] = useState(dateTime.current);
   const [dateTo, setDateTo] = useState(dateTime.future);
+  const [connectionEstablished, setConnectionEstablished] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+
+  const fetchNotifications = async (read) => {
+    try{
+      let response = null;
+      if(read){
+        response = await axios.put(`${devConfig.API_URL}/notifications/${userId}`);
+      }
+      else{
+        response = await axios.get(`${devConfig.API_URL}/notifications/${userId}`);
+      }
+      setNotifications(response.data);
+    }
+    catch {
+      toast.show('Failed to fetch notifications', { type: 'danger', placement: 'top'});
+    }
+  }
+
+  React.useEffect(() => {
+    if(isLoggedIn && !connectionEstablished) {
+      setConnectionEstablished(true);
+      console.log('connecting to socket:', userId);
+      socket.emit('register', { userId });
+      socket.on('error', (error) => {
+        console.error('Socket error:', error);
+      });
+      socket.on('notification', (notification) => {
+        fetchNotifications(false);
+      });
+    }
+
+    // return () => {
+    //   socket.disconnect();
+    // };
+  }, [isLoggedIn, connectionEstablished]);
 
   if (fontsLoaded) {
     return (
@@ -54,7 +97,8 @@ export default function App() {
           setIsLoggedIn, 
           setUserId, userId,
           dateFrom, setDateFrom,
-          dateTo, setDateTo 
+          dateTo, setDateTo,
+          notifications, fetchNotifications
           }}>
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ animation: 'none' }} >
@@ -72,14 +116,6 @@ export default function App() {
                 </Stack.Group>
               ) : (
                 <Stack.Group>
-                  <Stack.Screen
-                    name="AddProduct"
-                    component={AddingProductScreen}
-                  />
-                  <Stack.Screen
-                    name="Food"
-                    component={FoodScreen}
-                  />
                   <Stack.Screen
                     name="Home"
                     component={HomeScreen}
@@ -101,10 +137,21 @@ export default function App() {
                     name="GroupTrainings"
                     component={GroupTrainingsScreen}
                   />
-
+                  <Stack.Screen
+                    name="Food"
+                    component={FoodScreen}
+                  />
+                  <Stack.Screen
+                    name="AddProduct"
+                    component={AddingProductScreen}
+                  />
                   <Stack.Screen
                     name="Settings"
                     component={SettingsScreen}
+                  />
+                  <Stack.Screen
+                    name="Notifications"
+                    component={NotificationsScreen}
                   />
                 </Stack.Group>
               )}
