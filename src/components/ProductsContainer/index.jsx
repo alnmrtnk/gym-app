@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { DataTable } from 'react-native-paper';
-import Colors from '../../assets/Colors';
+import Colors from '../../../assets/Colors';
 
 const styles = StyleSheet.create({
   container: {
