@@ -88,11 +88,12 @@ const GoalScreen = ({ navigation }) => {
             const response = await axios.get(`${devConfig.API_URL}/user/${userId}`);
 
             setGoal(response.data.goal);
+            toast.show("Goal fetched successfully", { type: "success", placement: "top" });
         } catch (error) {
             toast.show("Something went wrong on the server", { type: "danger", placement: "top" });
         }
     }
-
+    
     const setGoalOnServer = async () => {
         try {
             const response = await axios.put(`${devConfig.API_URL}/user/${userId}`, { goal: goal });
@@ -134,9 +135,9 @@ const GoalScreen = ({ navigation }) => {
                             <Text style={styles.goalButtonText}>Improve health</Text>
                         </TouchableOpacity>
                     </View>
-                    <Pressable style={styles.saveButton} onPress={setGoalOnServer}>
+                    <TouchableOpacity style={styles.saveButton} onPress={setGoalOnServer}>
                         <Text style={styles.buttonText}>Save</Text>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
             </HeaderBottomMenuComponent>
         </View>

@@ -29,7 +29,7 @@ const CircularGraph = ({ generalNumber, consumedNumber }) => {
                     position: "absolute", top: "40%", left: "20%", zIndex: 3, fontSize: 18, color: Colors.DARK_TEXT_COLOR, 
                     fontFamily: "nunito-bold", width: 100, textAlign: "center", height: "fit-content"
                 }}>
-                {generalNumber - consumedNumber} remaining
+                {(generalNumber - consumedNumber).toFixed(0)} remaining
             </Text>
             <ProgressChart
                 data={data}

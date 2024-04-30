@@ -50,7 +50,7 @@ const CaloriesDataMainPage = ({baseGoal, consumedFood, exercises}) => {
                 <BroccoliSVG width={40} height={40}/>
                 <View style={styles.subTextContainer}>
                     <Text style={styles.header}>Food</Text>
-                    <Text style={styles.subHeader}>{consumedFood}</Text>
+                    <Text style={styles.subHeader}>{consumedFood.toFixed(0)}</Text>
                 </View>
             </View>
             <View style={styles.subContainer}>

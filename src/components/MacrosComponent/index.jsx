@@ -89,14 +89,14 @@ const MacrosComponent = ({
             <Text style={styles.header}>Macros</Text>
             <View style={styles.graphsContainer}>
                 <CircularProgressChart
-                    data={[(Carbohydrates.consumed / Carbohydrates.general) < 1 ? Carbohydrates.consumed / Carbohydrates.general : (Carbohydrates.consumed - Carbohydrates.general) / Carbohydrates.consumed]}
+                    data={[(Carbohydrates.consumed / Carbohydrates.general) < 1 ? (Carbohydrates.consumed / Carbohydrates.general) : (Carbohydrates.consumed - Carbohydrates.general) / Carbohydrates.consumed]}
                     topText={"Carbs"}
                     InnerText={
                         <View style={styles.innerTextContainer}>
-                            <Text style={{ ...styles.innerTopText, color: 'rgb(83, 144, 217)' }}>{Carbohydrates.consumed}</Text>
-                            <Text style={styles.innerBottomText}>/{Carbohydrates.general}g</Text>
+                            <Text style={{ ...styles.innerTopText, color: 'rgb(83, 144, 217)' }}>{(Carbohydrates.consumed).toFixed(1)}</Text>
+                            <Text style={styles.innerBottomText}>/{(Carbohydrates.general).toFixed(1)}g</Text>
                         </View>}
-                    bottomText={Carbohydrates.general - Carbohydrates.consumed + "g left"}
+                    bottomText={(Carbohydrates.general - Carbohydrates.consumed).toFixed(1) + "g left"}
                     size={120}
                     textColor={"83, 144, 217"}
                 />
@@ -105,10 +105,10 @@ const MacrosComponent = ({
                     topText={"Fats"}
                     InnerText={
                         <View style={styles.innerTextContainer}>
-                            <Text style={{ ...styles.innerTopText, color: 'rgb(72, 191, 227)' }}>{Fats.consumed}</Text>
-                            <Text style={styles.innerBottomText}>/{Fats.general}g</Text>
+                            <Text style={{ ...styles.innerTopText, color: 'rgb(72, 191, 227)' }}>{(Fats.consumed).toFixed(1)}</Text>
+                            <Text style={styles.innerBottomText}>/{(Fats.general).toFixed(1)}g</Text>
                         </View>}
-                    bottomText={Fats.general - Fats.consumed + "g left"}
+                    bottomText={(Fats.general - Fats.consumed).toFixed(1) + "g left"}
                     size={120}
                     textColor={"72, 191, 227"}
                 />
@@ -117,8 +117,8 @@ const MacrosComponent = ({
                     topText={"Proteins"}
                     InnerText={
                         <View style={styles.innerTextContainer}>
-                            <Text style={{ ...styles.innerTopText, color: 'rgb(114, 239, 221)' }}>{Proteins.consumed}</Text>
-                            <Text style={styles.innerBottomText}>/{Proteins.general}g</Text>
+                            <Text style={{ ...styles.innerTopText, color: 'rgb(114, 239, 221)' }}>{(Proteins.consumed).toFixed(1)}</Text>
+                            <Text style={styles.innerBottomText}>/{(Proteins.general).toFixed(1)}g</Text>
                         </View>}
                     bottomText={Proteins.general - Proteins.consumed + "g left"}
                     size={120}
@@ -126,8 +126,8 @@ const MacrosComponent = ({
                 />
             </View>
             <View style={styles.caloriesContainer}>
-                <Text style={styles.caloriesContainerMainText}>{Calories.consumed} cal / {Calories.general} cal</Text>
-                <Text style={styles.caloriesContainerText}>{Calories.general - Calories.consumed} cal left</Text>
+                <Text style={styles.caloriesContainerMainText}>{(Calories.consumed).toFixed(0)} cal / {Calories.general} cal</Text>
+                <Text style={styles.caloriesContainerText}>{(Calories.general - Calories.consumed).toFixed(0)} cal left</Text>
             </View>
         </View>
     );

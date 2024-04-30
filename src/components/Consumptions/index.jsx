@@ -61,19 +61,19 @@ const Consumptions = ({ openAddForm, deleteConsumption, consumptions }) => {
                                 <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.name}</Text>
                             </DataTable.Cell>
                             <DataTable.Cell numeric style={styles.tableCell}>
-                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.calories}</Text>
+                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.calories.toFixed(1)}</Text>
                             </DataTable.Cell>
                             <DataTable.Cell numeric style={styles.tableCell}>
-                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.protein}</Text>
+                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.protein.toFixed(1)}</Text>
                             </DataTable.Cell>
                             <DataTable.Cell numeric style={styles.tableCell}>
-                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.fat}</Text>
+                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.fat.toFixed(1)}</Text>
                             </DataTable.Cell>
                             <DataTable.Cell numeric style={styles.tableCell}>
-                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.carbs}</Text>
+                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.carbs.toFixed(1)}</Text>
                             </DataTable.Cell>
                             <DataTable.Cell style={styles.tableCell}>
-                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.amount} {consumption.unit}</Text>
+                                <Text style={{ fontFamily: "nunito-regular", fontSize: 12, height: 'fit-content' }}>{consumption.unit === 'ml' ? (consumption.amount.toFixed(0)) : consumption.amount.toFixed(1)} {consumption.unit}</Text>
                             </DataTable.Cell>
                             <DataTable.Cell style={styles.tableCell} onPress={() => deleteConsumption(consumption)}>
                                 <DeleteSVG width={20} height={20} />
